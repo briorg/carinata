@@ -107,8 +107,10 @@ echo "net.ipv4.ip_forward = 1" | tee /usr/lib/sysctl.d/docker-ce.conf
 echo "g docker -" | tee /usr/lib/sysusers.d/docker.conf
 
 rm -rf /opt
-mkdir -p /opt
-mkdir -p /Users # for MacOS compatibility :)
+rm -rf /usr/local
+ln -sf /var/usrlocal /usr/local
+ln -sf /var/opt /opt
+ln -sf /var/home /Users # macOS compat
 
 KERNEL_VERSION="$(find "/usr/lib/modules" -maxdepth 1 -type d ! -path "/usr/lib/modules" -exec basename '{}' ';' | sort | tail -n 1)"
 export DRACUT_NO_XATTR=1
