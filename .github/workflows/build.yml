@@ -53,7 +53,7 @@ jobs:
         id: build
         run: |
           set -x
-          sudo podman build -t "${IMAGE_NAME}:${DEFAULT_TAG}" -f ./Containerfile .
+          podman build -t "${IMAGE_NAME}:${DEFAULT_TAG}" -f ./Containerfile .
           echo "image_tag=${DEFAULT_TAG}" >> "${GITHUB_OUTPUT}"
 
       - name: Load Image
