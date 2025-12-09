@@ -25,7 +25,7 @@ create:
     limactl create \
         --name=docker \
         --yes \
-        ./docker-centos-rootful.yaml
+        ./docker-carinata-rootful.yaml
 
 create-mac:
     limactl create \
