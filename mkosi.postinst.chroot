@@ -40,3 +40,30 @@ ln -sf /var/home /Users # macOS compat
 systemctl mask systemd-firstboot* # this breaks everything
 systemctl mask firewalld
 rm /usr/lib/systemd/system/systemd-firstboot*.service
+
+pushd /tmp
+tee sshd-chungus.te <<EOF
+module sshd-chungus 1.0;
+
+require {
+        type container_runtime_t;
+        type container_var_run_t;
+        type unconfined_service_t;
+        type sshd_session_t;
+        type var_run_t;
+        class sock_file write;
+        class unix_stream_socket connectto;
+}
+
+#============= sshd_session_t ==============
+
+allow sshd_session_t container_runtime_t:unix_stream_socket connectto;
+allow sshd_session_t container_var_run_t:sock_file write;
+allow sshd_session_t unconfined_service_t:unix_stream_socket connectto;
+allow sshd_session_t var_run_t:sock_file write;
+EOF
+
+checkmodule -M -m -o sshd-chungus.mod sshd-chungus.te
+semodule_package -o sshd-chungus.pp -m sshd-chungus.mod
+semodule -i sshd-chungus.pp
+popd
