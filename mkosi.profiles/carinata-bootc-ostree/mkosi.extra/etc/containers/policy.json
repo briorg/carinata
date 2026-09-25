@@ -23,7 +23,7 @@
             "ghcr.io/tulilirockz": [
                 {
                     "type": "sigstoreSigned",
-                    "keyPath": "/usr/lib/pki/containers/carinata.pub",
+                    "keyPath": "/usr/share/pki/containers/carinata.pub",
                     "signedIdentity": {
                         "type": "matchRepository"
                     }
